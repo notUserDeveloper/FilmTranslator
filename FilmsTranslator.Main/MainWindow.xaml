@@ -1,0 +1,10 @@
+﻿<Window x:Class="FilmsTranslator.Main.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="531" Width="749" ResizeMode="NoResize">
+    <Grid>
+        <Button Content="GetFilms" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75"/>
+        <TextBox x:Name="Logger" VerticalScrollBarVisibility="Visible" HorizontalAlignment="Left" Height="457" Margin="10,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="691"/>
+
+    </Grid>
+</Window>
