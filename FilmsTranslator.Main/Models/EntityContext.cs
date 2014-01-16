@@ -7,6 +7,8 @@ namespace FilmsTranslator.Main.Models
         public DbSet<Film> Films { get; set; }
         public DbSet<Kinopoisk> Kinopoisks { get; set; }
         public DbSet<NewTitle> NewTitles { get; set; }
+        public DbSet<KinopoiskFilmVariator> KinopoiskFilmVariators { get; set; }
+        public DbSet<Job> Jobs { get; set; }
         public DbSet<SubStatistic> SubStatistics { get; set; }
         public DbSet<Parasite> Parasites { get; set; }
         public DbSet<RightWord> RightWords { get; set; }

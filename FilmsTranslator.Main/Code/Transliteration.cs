@@ -44,14 +44,14 @@ namespace FilmsTranslator.Main.Code
                 {@"\.", " "}
             };
 
-        public void DoTransliteration(NewTitle newTitle)
+        public string DoTransliteration(string clearTitle)
         {
-            string title = newTitle.ClearTitle;
+            var title = clearTitle;
             foreach (var latter in Iso)
             {
                 title = Regex.Replace(title, latter.Key, latter.Value, RegexOptions.IgnoreCase);
             }
-            newTitle.TransliteTitle = title;
+            return title;
         }
     }
 }

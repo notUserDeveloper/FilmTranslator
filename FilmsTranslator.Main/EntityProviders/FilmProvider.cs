@@ -2,13 +2,13 @@ using System.Collections.Generic;
 using System.Linq;
 using FilmsTranslator.Main.Models;
 
-namespace FilmsTranslator.Main.EntityManagers
+namespace FilmsTranslator.Main.EntityProviders
 {
-    public class FilmManager
+    public class FilmProvider
     {
         private readonly EntityContext db;
 
-        public FilmManager()
+        public FilmProvider()
         {
             db = DB.Init;
         }
@@ -25,20 +25,20 @@ namespace FilmsTranslator.Main.EntityManagers
             db.SaveChanges();
         }
 
-        public IEnumerable<Film> GetFilmsChecked(bool flag)
+        public IEnumerable<Film> GetFilmsChecked(bool isChecked)
         {
             return (from film in db.Films
                 where
-                    film.Checked == flag
+                    film.Checked == isChecked
                 select film);
         }
 
-        public void SetChecked(int filmId, bool flag = true)
+        public void SetChecked(int filmId, bool isChecked = true)
         {
             var film = db.Films.FirstOrDefault(f => f.Id == filmId);
             if (film != null)
             {
-                film.Checked = flag; 
+                film.Checked = isChecked; 
                 db.SaveChanges();
             }
         }

@@ -12,9 +12,9 @@ namespace FilmsTranslator.Main.Code
             _speller = speller;
         }
 
-        public void DoPredict(NewTitle transliterationNewTitle)
+        public string DoPredict(string transliterationNewTitle)
         {
-            transliterationNewTitle.Predictor = _speller.DoSpell(transliterationNewTitle.TransliteTitle);
+            return _speller.DoSpell(transliterationNewTitle);
         }
     }
 }

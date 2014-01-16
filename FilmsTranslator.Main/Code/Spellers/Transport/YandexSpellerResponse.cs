@@ -5,7 +5,7 @@ namespace FilmsTranslator.Main.Code.Spellers.Transport
 {
     [Serializable]
     [XmlType(Namespace = "http://speller.yandex.net/services/spellservice")]
-    public class YandexSpellerResponce
+    public class YandexSpellerResponse
     {
         private int codeField;
         private int colField;

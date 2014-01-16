@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using FilmsTranslator.Main.Code;
 using FilmsTranslator.Main.Code.Helpers;
 using FilmsTranslator.Main.Models;
 
-namespace FilmsTranslator.Main.EntityManagers
+namespace FilmsTranslator.Main.EntityProviders
 {
-    public class StatisticManager
+    public class StatisticProvider
     {
 
         public void AddStatistic(List<string> words)

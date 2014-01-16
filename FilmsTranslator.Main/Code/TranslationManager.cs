@@ -7,7 +7,6 @@ namespace FilmsTranslator.Main.Code
         private readonly PredictorManager _predictorManager;
         private readonly Transliteration _transliteration;
 
-
         public TranslationManager(Transliteration transliteration, PredictorManager predictorManager)
         {
             _transliteration = transliteration;
@@ -16,9 +15,8 @@ namespace FilmsTranslator.Main.Code
 
         public void DoTranslate(NewTitle newTitle)
         {
-            _transliteration.DoTransliteration(newTitle);
-            _predictorManager.DoPredict(newTitle);
-
+            newTitle.TransliteTitle =  _transliteration.DoTransliteration(newTitle.ClearTitle);
+            newTitle.Predictor = _predictorManager.DoPredict(newTitle.TransliteTitle);
         }
     }
 }

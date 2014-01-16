@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using FilmsTranslator.Main.Models;
 
-namespace FilmsTranslator.Main.EntityManagers
+namespace FilmsTranslator.Main.EntityProviders
 {
-    public class KinopoiskManager
+    public class KinopoiskProvider
     {
         private EntityContext db;
-        public KinopoiskManager()
+        public KinopoiskProvider()
         {
             db = DB.Init;
         }

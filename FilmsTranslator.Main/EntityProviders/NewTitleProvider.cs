@@ -2,13 +2,13 @@
 using System.Linq;
 using FilmsTranslator.Main.Models;
 
-namespace FilmsTranslator.Main.EntityManagers
+namespace FilmsTranslator.Main.EntityProviders
 {
-    public class NewTitleManager
+    public class NewTitleProvider
     {
         private EntityContext db;
 
-        public NewTitleManager()
+        public NewTitleProvider()
         {
             db = DB.Init;
         }
@@ -22,18 +22,23 @@ namespace FilmsTranslator.Main.EntityManagers
             db.SaveChanges();
         }
 
+        /// <remarks>
+        /// Превращает в наблюдаемую коллекцию
+        /// </remarks>
+        /// <param name="newTitles"></param>
         public void AddNewTitles(List<NewTitle> newTitles)
         {
-            foreach (var newTitle in newTitles)
+            for(var i=0; i<newTitles.Count; i++)
             {
-                var newTitleDb = db.NewTitles.FirstOrDefault(t => t.FilmId == newTitle.FilmId);
+                var ntLoc = newTitles[i];
+                var newTitleDb = db.NewTitles.FirstOrDefault(t => t.FilmId == ntLoc.FilmId);
                 if (newTitleDb == null)
                 {
-                    db.NewTitles.Add(newTitle);
+                    db.NewTitles.Add(ntLoc);
                 }
                 else
                 {
-                    
+                    newTitles[i] = newTitleDb;
                 }
             }
             db.SaveChanges();

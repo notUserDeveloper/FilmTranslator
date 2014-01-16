@@ -2,8 +2,9 @@
 using System.Linq;
 using System.Threading;
 using FilmsTranslator.Main.Code;
+using FilmsTranslator.Main.Code.Parsers;
 using FilmsTranslator.Main.Code.Spellers;
-using FilmsTranslator.Main.EntityManagers;
+using FilmsTranslator.Main.EntityProviders;
 
 namespace FilmsTranslator.Main
 {
@@ -15,13 +16,15 @@ namespace FilmsTranslator.Main
         private const string DirPath = @"d:\film\";
 
         private readonly FileProvider _fileProvider;
-        private readonly FilmManager _filmManager;
+        private readonly FilmProvider _filmProvider;
         private readonly TranslationManager _translationManager;
         private readonly ClearManager _clearManager;
-        private readonly ParasiteManager _parasiteManager;
-        private readonly NewTitleManager _newTitleManager;
+        private readonly ParasiteProvider _parasiteProvider;
+        private readonly NewTitleProvider _newTitleProvider;
         private readonly KinopoiskParser _kinopoiskParser;
-        private readonly KinopoiskManager _kinopoiskManager;
+        private readonly KinopoiskProvider _kinopoiskProvider;
+        private readonly KinopoiskFilmVariatorProvider _kinopoiskFilmVariatorProvider;
+        private readonly KinopoiskFilmVariatorManager _kinopoiskFilmVariatorManager;
 
         public MainWindow()
         {
@@ -29,15 +32,17 @@ namespace FilmsTranslator.Main
             // Database.SetInitializer(new DropCreateDatabaseAlways<EntityContext>());   
 
             _fileProvider = new FileProvider();
-            _filmManager = new FilmManager();
+            _filmProvider = new FilmProvider();
             _translationManager = new TranslationManager(
                 new Transliteration(), new PredictorManager(
                     new YandexSpeller(new HttpRequester())));
             _clearManager = new ClearManager();
-            _parasiteManager = new ParasiteManager();
-            _newTitleManager = new NewTitleManager();
+            _parasiteProvider = new ParasiteProvider();
+            _newTitleProvider = new NewTitleProvider();
             _kinopoiskParser = new KinopoiskParser(new HttpRequester());
-            _kinopoiskManager = new KinopoiskManager();
+            _kinopoiskProvider = new KinopoiskProvider();
+            _kinopoiskFilmVariatorProvider = new KinopoiskFilmVariatorProvider();
+            _kinopoiskFilmVariatorManager = new KinopoiskFilmVariatorManager(new DamerauLevensteinMetric());
 
             var mainTh = new Thread(Init);
             mainTh.Start();
@@ -54,29 +59,35 @@ namespace FilmsTranslator.Main
         private void Init()
         {
             var films = _fileProvider.GetFilms(DirPath).ToList();
-            _filmManager.AddFilms(films);
+            _filmProvider.AddFilms(films);
 
 //            var statistic = _statisticManager.GetStatistic(films);
 //            _statisticManager.AddStatistic(statistic);
 
-            var filmsUnchecked = _filmManager.GetFilmsChecked(false).ToList();
-            var parasitesWords = _parasiteManager.GetAllWords().ToList();
+            var filmsUnchecked = _filmProvider.GetFilmsChecked(false).ToList();
+            var parasitesWords = _parasiteProvider.GetAllWords().ToList();
 
             var newTitles = _clearManager.DoClearDictionary(filmsUnchecked, parasitesWords);
-            _newTitleManager.AddNewTitles(newTitles);
+            _newTitleProvider.AddNewTitles(newTitles);
 
             newTitles.ForEach(nt =>
             {
                 _translationManager.DoTranslate(nt);  
-                _filmManager.SetChecked(nt.FilmId, true);
+                _filmProvider.SetChecked(nt.FilmId, true);
 
-                var kinopoiskInfo = _kinopoiskParser.GetKinopoiskInfo(nt.Predictor);
+                var filmVariations = _kinopoiskParser.GetFilmVariations(nt.Predictor);
+                filmVariations.ForEach(v => v.NewTitleId = nt.Id);
+                _kinopoiskFilmVariatorProvider.AddFilmVariators(filmVariations);
+
+                var nearFilmVariation = _kinopoiskFilmVariatorManager.GetNearFilmVariation(nt.Predictor, filmVariations);
+
+                var kinopoiskInfo = _kinopoiskParser.GetFilmInfo(nearFilmVariation.Url);
                 if (kinopoiskInfo != null)
                 {
-                    _kinopoiskManager.AddKinopoiskItem(kinopoiskInfo);
+                    _kinopoiskProvider.AddKinopoiskItem(kinopoiskInfo);
                     nt.KinopoiskId = kinopoiskInfo.Id;
                 }
-                _newTitleManager.SaveChanges();
+                _newTitleProvider.SaveChanges();
 
                 Debug.WriteLine(nt.TransliteTitle + " => " + nt.Predictor + " => " + ((kinopoiskInfo==null)?"null":kinopoiskInfo.RusName));
                 Thread.Sleep(12000);
@@ -111,7 +122,7 @@ namespace FilmsTranslator.Main
 
             foreach (var item in tbl)
             {
-                Kinopoisk kinopoiskInfo = _kinopoiskParser.GetKinopoiskInfo(item.SpellingGoogle);
+                Kinopoisk kinopoiskInfo = _kinopoiskParser.GetFilmInfo(item.SpellingGoogle);
                 if (kinopoiskInfo == null)
                 {
                     Dispatcher.Invoke(

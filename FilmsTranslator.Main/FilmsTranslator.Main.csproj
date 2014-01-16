@@ -102,7 +102,11 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Code\ClearManager.cs" />
-    <Compile Include="EntityManagers\FilmManager.cs" />
+    <Compile Include="Code\DamerauLevensteinMetric.cs" />
+    <Compile Include="Code\Enums\JobStatus.cs" />
+    <Compile Include="Code\KinopoiskFilmVariatorManager.cs" />
+    <Compile Include="EntityProviders\Abstract\EntityProviderAbstract.cs" />
+    <Compile Include="EntityProviders\FilmProvider.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -113,15 +117,17 @@
     </Compile>
     <Compile Include="Code\FileProvider.cs" />
     <Compile Include="Code\HttpRequester.cs" />
-    <Compile Include="EntityManagers\KinopoiskManager.cs" />
-    <Compile Include="EntityManagers\NewTitleManager.cs" />
-    <Compile Include="EntityManagers\ParasiteManager.cs" />
+    <Compile Include="EntityProviders\JobProvider.cs" />
+    <Compile Include="EntityProviders\KinopoiskFilmVariatorProvider.cs" />
+    <Compile Include="EntityProviders\KinopoiskProvider.cs" />
+    <Compile Include="EntityProviders\NewTitleProvider.cs" />
+    <Compile Include="EntityProviders\ParasiteProvider.cs" />
     <Compile Include="Code\Predictors\Abstract\PredictorAbstract.cs" />
     <Compile Include="Code\Parsers\KinopoiskParser.cs" />
     <Compile Include="Code\PredictorManager.cs" />
-    <Compile Include="EntityManagers\RightWordManager.cs" />
+    <Compile Include="EntityProviders\RightWordProvider.cs" />
     <Compile Include="Code\Spellers\Abstract\SpellerAbstract.cs" />
-    <Compile Include="EntityManagers\StatisticManager.cs" />
+    <Compile Include="EntityProviders\StatisticProvider.cs" />
     <Compile Include="Code\Helpers\StringHelper.cs" />
     <Compile Include="Code\TranslationManager.cs" />
     <Compile Include="Code\Transliteration.cs" />
@@ -129,9 +135,10 @@
     <Compile Include="Code\Predictors\GooglePredictor.cs" />
     <Compile Include="Code\Spellers\YandexSpeller.cs" />
     <Compile Include="Code\Spellers\Enum\YandexSpellerError.cs" />
-    <Compile Include="Code\Spellers\Transport\YandexSpellerResponce.cs" />
+    <Compile Include="Code\Spellers\Transport\YandexSpellerResponse.cs" />
     <Compile Include="Models\EntityContext.cs" />
     <Compile Include="Models\Film.cs" />
+    <Compile Include="Models\KinopoiskFilmVariator.cs" />
     <Compile Include="Models\Kinopoisk.cs" />
     <Compile Include="Models\NewTitle.cs" />
     <Compile Include="MainWindow.xaml.cs">
@@ -143,6 +150,7 @@
     <Compile Include="Models\Parasite.cs" />
     <Compile Include="Models\RightWord.cs" />
     <Compile Include="Models\SubStatistic.cs" />
+    <Compile Include="Models\Job.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

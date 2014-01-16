@@ -2,9 +2,9 @@
 using System.Linq;
 using FilmsTranslator.Main.Models;
 
-namespace FilmsTranslator.Main.EntityManagers
+namespace FilmsTranslator.Main.EntityProviders
 {
-    public class ParasiteManager
+    public class ParasiteProvider
     {
         public List<string> GetAllWords()
         {
