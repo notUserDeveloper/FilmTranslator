@@ -23,7 +23,7 @@ namespace FilmsTranslator.Main.Code.Helpers
             {
                 if (IsYear(filmWord))
                 {
-                    return Convert.ToInt32(filmWord);
+                    return filmWord.ToInt();
                 }
             }
             return null;
@@ -31,7 +31,11 @@ namespace FilmsTranslator.Main.Code.Helpers
 
         public static bool IsYear(string text)
         {
-            int year = Convert.ToInt32(text);
+            var year = text.ToInt();
+            if (year == null)
+            {
+                return false;
+            }
             return Regex.IsMatch(text, PatternYear)
                    && year > StartFilmYear
                    && year <= DateTime.Now.Year;

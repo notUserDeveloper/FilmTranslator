@@ -104,6 +104,7 @@
     <Compile Include="Code\ClearManager.cs" />
     <Compile Include="Code\DamerauLevensteinMetric.cs" />
     <Compile Include="Code\Enums\JobStatus.cs" />
+    <Compile Include="Code\Helpers\Extensions.cs" />
     <Compile Include="Code\KinopoiskFilmVariatorManager.cs" />
     <Compile Include="Code\Helpers\YearHelper.cs" />
     <Compile Include="EntityProviders\Abstract\EntityProviderAbstract.cs" />
