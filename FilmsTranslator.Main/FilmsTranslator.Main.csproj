@@ -105,6 +105,7 @@
     <Compile Include="Code\DamerauLevensteinMetric.cs" />
     <Compile Include="Code\Enums\JobStatus.cs" />
     <Compile Include="Code\KinopoiskFilmVariatorManager.cs" />
+    <Compile Include="Code\Helpers\YearHelper.cs" />
     <Compile Include="EntityProviders\Abstract\EntityProviderAbstract.cs" />
     <Compile Include="EntityProviders\FilmProvider.cs" />
     <Page Include="MainWindow.xaml">
@@ -115,7 +116,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Code\FileProvider.cs" />
+    <Compile Include="Code\FilmManager.cs" />
     <Compile Include="Code\HttpRequester.cs" />
     <Compile Include="EntityProviders\JobProvider.cs" />
     <Compile Include="EntityProviders\KinopoiskFilmVariatorProvider.cs" />

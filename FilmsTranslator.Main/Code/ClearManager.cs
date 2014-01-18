@@ -26,5 +26,10 @@ namespace FilmsTranslator.Main.Code
             }
             return newTitles;
         }
+
+        public string DoClearYear(string text)
+        {
+            return YearHelper.CutYear(text);
+        }
     }
 }

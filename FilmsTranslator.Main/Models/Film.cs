@@ -14,6 +14,7 @@ namespace FilmsTranslator.Main.Models
         public int? JobId { get; set; }
         public string StartTitle { get; set; }
         public string Extension { get; set; }
+        public int? Year { get; set; }
         public double Size { get; set; }
         public DateTime AddDate { get; set; }
         public bool Checked { get; set; }
