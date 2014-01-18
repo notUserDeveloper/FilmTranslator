@@ -2,6 +2,9 @@
 
 namespace FilmsTranslator.Main.Code
 {
+    /// <summary>
+    /// тест
+    /// </summary>
     public class TranslationManager
     {
         private readonly PredictorManager _predictorManager;
