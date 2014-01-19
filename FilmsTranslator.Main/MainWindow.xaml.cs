@@ -76,10 +76,14 @@ namespace FilmsTranslator.Main
                 _translationManager.DoTranslate(nt);  
 
                 var filmVariations = _kinopoiskParser.GetFilmVariations(nt.Predictor);
+                if (filmVariations.Count == 0)
+                {
+                    return;
+                }
                 filmVariations.ForEach(v => v.NewTitleId = nt.Id);
                 _kinopoiskFilmVariatorProvider.AddFilmVariators(filmVariations);
 
-                var nearFilmVariation = _kinopoiskFilmVariatorManager.GetNearFilmVariation(nt.Predictor + " " + nt.Film.Year, filmVariations);
+                var nearFilmVariation = _kinopoiskFilmVariatorManager.GetNearFilmVariation(nt.Predictor, nt.Film.Year, filmVariations);
 
                 var kinopoiskInfo = _kinopoiskParser.GetFilmInfo(nearFilmVariation.Url);
                 if (kinopoiskInfo != null)
