@@ -37,6 +37,7 @@ namespace FilmsTranslator.Main.Code
                 {"t", "т"},
                 {"u", "у"},
                 {"f", "ф"},
+                {"w", "в"},
                 {"x", "х"},
                 {"y", "ы"},
 				{"z", "з"},
